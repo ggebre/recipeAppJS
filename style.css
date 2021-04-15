@@ -1,0 +1,109 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    margin: 0;
+    background-color: #A9C9FF;
+background-image: linear-gradient(180deg, #A9C9FF 0%, #FFBBEC 100%);
+display: flex;
+align-items: center;
+justify-content: center;
+min-height: 100vh;
+
+}
+.mobile-container{
+    background-color: #fff;
+    box-shadow: 0 0 5px #3333331a;
+    border-radius: 3px;
+    overflow: hidden;
+    width: 400px;
+}
+header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+header input{
+    background-color: #eee;
+    border: none;
+    border-radius: 3px;
+    padding: 0.5rem 1rem;
+}
+header button{
+    background-color: transparent;
+    border: none;
+    color: #aaa;
+    font-size: 1.5rem;
+    margin-left: 10px;
+}
+.fav-container{
+    background-color: rgb(233, 199, 255);
+    padding: 1rem;
+    text-align: center;
+}
+.fav-meals{
+     display: flex;
+     flex-wrap: wrap;
+     justify-content: center;
+     list-style-type: none;
+     padding: 0;
+}
+.fav-meals li {
+    width: 80px;
+}
+.fav-meals li img {
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 5px #3333331a;
+    border-radius: 50%;
+    object-fit: cover;
+    width: 70px;
+    height: 70px;
+}
+.fav-meals li span {
+    font-size: 0.9rem;
+}
+.meal {
+    border-radius: 3px;
+    box-shadow: 0 0 5px #3333331a;
+    margin: 1.5rem;
+    overflow: hidden;
+}
+.meal-header{
+    position: relative;
+}
+.meal-header .random{
+    position: absolute;
+    top: 15px;
+    background-color: #fff;
+    padding: 0.25rem 1rem;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+.meal-header img{
+    object-fit: cover;
+    height: 250px;
+    width: 100%;
+}
+.meal-body{
+    display: flex; 
+    align-items: center;
+    justify-content: space-around;
+    padding: 1rem
+}
+.meal-body h4{
+    margin: 0;
+}
+.meal-body .fav-btn{
+    border: none;
+    background-color: transparent;
+    color:gray;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+.meal-body .fav-btn.active{
+    color: rebeccapurple;
+}
+img{
+    max-width: 100%;
+}
