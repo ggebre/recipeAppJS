@@ -1,6 +1,7 @@
 const meals = document.getElementById('meals')
 const favMealContainer = document.getElementById('fav-meals') 
-const inputText = document.getElementById('search-term')
+const searchTerm = document.getElementById('search-term')
+const searchBtn = document.getElementById('search')
 
 
 getRandomMeal()
@@ -24,9 +25,9 @@ async function getMealById(id){
 async function getMealBySearch(term){
     const resp = await fetch("https://www.themealdb.com/api/json/v1/1/search.php?s=" + term)
     const respData = await resp.json(); 
-    const meal = respData.meals[0] 
+    const meals = respData.meals 
 
-    return meal 
+    return meals
 }
 function addMeal(mealData, random = false){
     
@@ -61,7 +62,7 @@ function addMeal(mealData, random = false){
             addMealToLS(mealData.idMeal)
             btn.classList.add('active')
         }
-        favMealContainer.innerHTML = ""
+        
         fetchFavMeals()
     })
     meals.appendChild(meal)
@@ -111,10 +112,11 @@ async function fetchFavMeals(){
     }
 } 
 
-// function acceptInput(){
-//     inputText.addEventListener('change', (e) => {
-//         searchTerm = e.target.value
-//         meal = getMealBySearch(searchTerm)
-//         console.log(meal)
-//     })
-// }
+searchBtn.addEventListener('click', async () => {
+    const term = searchTerm.value
+    const meals = await getMealBySearch(term)
+
+    meals.forEach(meal => {
+        addMeal(meal)
+    })
+})
