@@ -1,8 +1,12 @@
 const meals = document.getElementById('meals')
-const favMealContainer = document.getElementById('fav-meals')
+const favMealContainer = document.getElementById('fav-meals') 
+const inputText = document.getElementById('search-term')
+
 
 getRandomMeal()
 fetchFavMeals()
+
+
 async function getRandomMeal(){
     const resp = await fetch("https://www.themealdb.com/api/json/v1/1/random.php")
     const respData = await resp.json(); 
@@ -16,11 +20,13 @@ async function getMealById(id){
     const meal = respData.meals[0] 
     
     return meal 
-    
 }
 async function getMealBySearch(term){
-    const meals = await fetch("https://www.themealdb.com/api/json/v1/1/search.php?s=" + term)
-    
+    const resp = await fetch("https://www.themealdb.com/api/json/v1/1/search.php?s=" + term)
+    const respData = await resp.json(); 
+    const meal = respData.meals[0] 
+
+    return meal 
 }
 function addMeal(mealData, random = false){
     
@@ -65,7 +71,14 @@ function addFavMeals(mealData){
     favMeal.innerHTML = `  
             <img src="${mealData.strMealThumb}" alt="${mealData.Meal}">
             <spam>${mealData.strMeal}</spam>
+
+            <button class="clear"><i class="fas fa-window-close"></i></button>
     `
+    const btn = favMeal.querySelector('.clear') 
+    btn.addEventListener('click', () => {
+        removeMealFromLS(mealData.idMeal)
+        fetchFavMeals()
+    })
     favMealContainer.appendChild(favMeal)
 }
 // save in local storage 
@@ -76,7 +89,10 @@ function addMealToLS(mealId){
 
 function removeMealFromLS(mealId){
     const mealIds = getMealsFromS() 
-    localStorage.removeItem('mealIds', JSON.stringify(mealIds.filter(id => id !== mealId)))
+    
+    localStorage.setItem(
+        'mealIds', 
+        JSON.stringify(mealIds.filter(id => id !== mealId)))
 
 }
 function getMealsFromS(){
@@ -86,11 +102,19 @@ function getMealsFromS(){
 }
 
 async function fetchFavMeals(){
+    favMealContainer.innerHTML = ""
     const mealIds = getMealsFromS()
     for(let i=0; i < mealIds.length; i++){
         const mealId = mealIds[i] 
         meal = await getMealById(mealId) 
-    
         addFavMeals(meal) 
     }
-}
+} 
+
+// function acceptInput(){
+//     inputText.addEventListener('change', (e) => {
+//         searchTerm = e.target.value
+//         meal = getMealBySearch(searchTerm)
+//         console.log(meal)
+//     })
+// }
