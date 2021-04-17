@@ -1,8 +1,11 @@
-const meals = document.getElementById('meals')
+const mealsEl = document.getElementById('meals')
 const favMealContainer = document.getElementById('fav-meals') 
 const searchTerm = document.getElementById('search-term')
 const searchBtn = document.getElementById('search')
 
+const mealPopup = document.getElementById("meal-popup")
+const popupCloseBtn = document.getElementById("close-popup")
+const mealInfo = document.getElementById('meal-info')
 
 getRandomMeal()
 fetchFavMeals()
@@ -65,9 +68,10 @@ function addMeal(mealData, random = false){
         
         fetchFavMeals()
     })
-    meals.appendChild(meal)
+    mealsEl.appendChild(meal)
 }
 function addFavMeals(mealData){
+    
     const favMeal = document.createElement('li')
     favMeal.innerHTML = `  
             <img src="${mealData.strMealThumb}" alt="${mealData.Meal}">
@@ -79,6 +83,12 @@ function addFavMeals(mealData){
     btn.addEventListener('click', () => {
         removeMealFromLS(mealData.idMeal)
         fetchFavMeals()
+    })
+    // show the recipe of an item when clicked!!!!
+    console.log(mealData)
+    favMeal.addEventListener('click', () => {
+        showMealInfo(mealData)
+        ingredientsOfAMeal(mealData)
     })
     favMealContainer.appendChild(favMeal)
 }
@@ -94,7 +104,6 @@ function removeMealFromLS(mealId){
     localStorage.setItem(
         'mealIds', 
         JSON.stringify(mealIds.filter(id => id !== mealId)))
-
 }
 function getMealsFromS(){
     const mealIds = JSON.parse(localStorage.getItem('mealIds'))
@@ -112,11 +121,53 @@ async function fetchFavMeals(){
     }
 } 
 
+function showMealInfo(mealData){
+    mealInfo.innerHTML = ""
+    const mealE1 = document.createElement('div')
+    
+    mealE1.innerHTML = `
+            <h1>${mealData.strMeal}</h1>
+            <img src="${mealData.strMealThumb}" alt="">
+            <p>${mealData.strInstructions}</p>
+            <h3> Ingredients </h3>
+            <ul>
+                ${ingredientsOfAMeal(mealData)}
+            </ul>
+    `
+    mealPopup.classList.remove('hidden')
+
+    mealInfo.appendChild(mealE1)
+
+}
+function ingredientsOfAMeal(mealData){
+    let count = 1
+    let check = true 
+    let ingredientList = ""
+    while(check){
+        if(mealData[`strIngredient${count}`] !== ""){
+            ingredientList += `<li>${mealData[`strIngredient${count}`]}------${mealData[`strMeasure${count}`]}</li>`
+            count++
+        } else {
+            check = !check
+        } 
+    }
+    return ingredientList
+}
+
 searchBtn.addEventListener('click', async () => {
+    mealsEl.innerHTML = ""
+
     const term = searchTerm.value
     const meals = await getMealBySearch(term)
-
-    meals.forEach(meal => {
-        addMeal(meal)
-    })
+    if(meals){
+        meals.forEach(meal => {
+            addMeal(meal)
+        })
+    }
+    
 })
+popupCloseBtn.addEventListener('click', () => {
+    mealPopup.classList.add("hidden")
+})
+
+
