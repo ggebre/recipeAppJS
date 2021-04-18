@@ -4,11 +4,11 @@
 body{
     margin: 0;
     background-color: #A9C9FF;
-background-image: linear-gradient(180deg, #A9C9FF 0%, #FFBBEC 100%);
-display: flex;
-align-items: center;
-justify-content: center;
-min-height: 100vh;
+    background-image: linear-gradient(180deg, #A9C9FF 0%, #FFBBEC 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
 
 }
 .mobile-container{
@@ -50,6 +50,7 @@ header button{
      padding: 0;
 }
 .fav-meals li {
+    cursor: pointer;
     position: relative;
     margin: 5px;
     width: 80px;
@@ -87,6 +88,7 @@ header button{
 .meal {
     border-radius: 3px;
     box-shadow: 0 0 5px #3333331a;
+    cursor: pointer;
     margin: 1.5rem;
     overflow: hidden;
 }
@@ -140,7 +142,7 @@ img{
     top: 0;
     bottom: 0;
 }
-.hidden{
+.popup-container.hidden{
     opacity: 0;
     pointer-events: none;
 }
@@ -166,3 +168,4 @@ img{
 .meal-info h1{
     text-align: center;
 }
+

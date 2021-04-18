@@ -145,7 +145,7 @@ function ingredientsOfAMeal(mealData){
     let ingredientList = ""
     while(check){
         if(mealData[`strIngredient${count}`] !== ""){
-            ingredientList += `<li>${mealData[`strIngredient${count}`]}------${mealData[`strMeasure${count}`]}</li>`
+            ingredientList += `<li>${mealData[`strIngredient${count}`]}--${mealData[`strMeasure${count}`]}</li>`
             count++
         } else {
             check = !check
